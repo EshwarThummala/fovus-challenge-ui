@@ -1,8 +1,19 @@
 import { useState } from "react";
-import { uploadFileToS3 } from "../api/aws_s3_api";
+import {
+  getFileFromS3,
+  uploadFileToS3,
+  checkFilePresentInS3,
+} from "../api/aws_s3_api";
 import { storeDetailsInDynamoDB } from "../api/aws_gateway_api";
 import useSessionContext from "../context/SessionContext";
-import { Button, Label, TextInput, FileInput, Alert } from "flowbite-react";
+import {
+  Button,
+  Label,
+  TextInput,
+  FileInput,
+  Alert,
+  Spinner,
+} from "flowbite-react";
 
 const HomeComponent = ({
   setConfirmationSuccess,
@@ -14,7 +25,16 @@ const HomeComponent = ({
   const [inputFile, setInputFile] = useState(null);
   const [s3message, sets3Message] = useState("");
   const [dbMessage, setDbMessage] = useState("");
+  const [outputFileData, setOutputFileData] = useState("");
+  const [ouputFileFound, setOutputFileFound] = useState(false);
+  const [submitClicked, setSubmitClicked] = useState(false);
   async function handleSubmit(event) {
+    setSubmitClicked(true);
+    if (!inputFile || !inputMessage) {
+      console.log("input file or message should not be empty");
+      setSubmitClicked(false);
+      return false;
+    }
     event.preventDefault();
     console.log(event);
     const s3FilePath = await uploadFileToS3(inputFile, tokens);
@@ -24,23 +44,80 @@ const HomeComponent = ({
       tokens.idToken,
     );
     setDbMessage(recordID);
+    let isPresent = false;
+    const outputFileName = "output" + inputFile.name;
+    const intervalId = setInterval(async function () {
+      isPresent = await checkFilePresentInS3(outputFileName, tokens);
+      if (isPresent) {
+        setOutputFileFound(true);
+        setOutputFileData(await getFileFromS3(outputFileName, tokens));
+        setSubmitClicked(false);
+        clearInterval(intervalId);
+      } else {
+        console.log("Object Not yet Found");
+      }
+    }, 5000);
   }
 
   return (
     <>
       {s3message && (
-        <Alert color="success" onDismiss={() => sets3Message("")}>
-          <span className="font-medium">S3 Bucket Alert!</span> File{" "}
-          {inputFile.name} successfully uploaded to S3 bucket (Path :{" "}
-          <span className="font-medium">{s3message}</span>)
-        </Alert>
+        <div className="flex justify-center">
+          <Alert
+            className="mt-3 max-w-xl px-2 py-1 text-sm"
+            color="info"
+            onDismiss={() => sets3Message("")}
+          >
+            <span className="font-medium">S3 Bucket Alert!</span> File{" "}
+            {inputFile.name} uploaded to S3 bucket (Path :{" "}
+            <span className="font-medium">{s3message}</span>)
+          </Alert>
+        </div>
       )}
       {dbMessage && (
-        <Alert color="success" onDismiss={() => setDbMessage("")}>
-          <span className="font-medium">Dynamo DB Alert!</span> Record
-          succesfully created in Dynamo DB (record id :{" "}
-          <span className="font-medium">{dbMessage}</span>)
-        </Alert>
+        <div className="flex justify-center">
+          <Alert
+            className="mt-3 max-w-xl px-2 py-1 text-sm"
+            color="info"
+            onDismiss={() => setDbMessage("")}
+          >
+            <span className="font-medium">Dynamo DB Alert!</span> Record created
+            in Dynamo DB (record id :{" "}
+            <span className="font-medium">{dbMessage}</span>)
+          </Alert>
+        </div>
+      )}
+      {ouputFileFound && (
+        <div className="flex justify-center">
+          <Alert
+            className="mt-3 max-w-xl px-2 py-1 text-sm"
+            color="success"
+            onDismiss={() => setOutputFileFound(false)}
+          >
+            <span className="font-medium">Output Alert!</span> Output File
+            successfully Generated
+          </Alert>
+        </div>
+      )}
+      {outputFileData && (
+        <div className="flex justify-center">
+          <Alert
+            className="mt-3 max-w-xl px-2 py-1 text-sm"
+            color="success"
+            onDismiss={() => {
+              setOutputFileData("");
+              setSubmitClicked(false);
+            }}
+          >
+            <span className="font-medium">Outfile Content</span>{" "}
+            {outputFileData}
+          </Alert>
+        </div>
+      )}
+      {submitClicked && (
+        <div className="flex justify-center">
+          <Spinner aria-label="Default status example" />
+        </div>
       )}
       <div className="flex h-screen items-center justify-center">
         <form className="w-full max-w-md rounded-lg bg-white px-4 py-8 shadow-md">
@@ -62,7 +139,10 @@ const HomeComponent = ({
           </div>
           <div id="">
             <div className="mb-2 mt-4 block">
-              <Label htmlFor="file-upload" value="Upload file" />
+              <Label
+                htmlFor="file-upload"
+                value="Upload file (Ensure each file uploaded to S3 has a unique filename since files are not deleted from S3. Otherwise, when fetching output, it may retrieve a previously generated uploaded output file.)"
+              />
             </div>
             <FileInput
               id="file-upload"
