@@ -20,7 +20,7 @@ const HomeComponent = ({
   setSignInSuccess,
   setSignUpSuccess,
 }) => {
-  const { tokens } = useSessionContext();
+  const { tokens, userName } = useSessionContext();
   const [inputMessage, setInputMessage] = useState("");
   const [inputFile, setInputFile] = useState(null);
   const [s3message, sets3Message] = useState("");
@@ -121,6 +121,13 @@ const HomeComponent = ({
       )}
       <div className="flex h-screen items-center justify-center">
         <form className="w-full max-w-md rounded-lg bg-white px-4 py-8 shadow-md">
+          <div>
+            <div className="mb-1 flex justify-center">
+              <h3>
+                <b>{`Hi ${userName}`}</b>
+              </h3>
+            </div>
+          </div>
           <div>
             <div className="mb-1 block">
               <Label htmlFor="inputMessage" value="Input Text" />

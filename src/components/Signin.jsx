@@ -6,7 +6,7 @@ import { getCognitoCredentials } from "../utils/getIndentityPoolCredentails";
 import { Button, Label, TextInput } from "flowbite-react";
 
 const Signin = ({ setSolPage, setSignInSuccess }) => {
-  const [userName, setUsername] = useState();
+  const { userName, setUsername } = useSessionContext();
   const [password, setPassword] = useState();
   const { setTokens } = useSessionContext();
 
