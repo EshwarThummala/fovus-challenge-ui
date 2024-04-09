@@ -1,46 +1,62 @@
-# Getting Started with Create React App
+# Fovus Challenge UI
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a simple full-stack web application developed with AWS, React, and Flowbite Tailwind CSS. It demonstrates my understanding of numerous AWS services, including EC2, Lambda, API Gateway, Cognito, DynanoDB, IAM, and a few others. Additionally, it demonstrates my proficiency in the React Library. The project's functionality is simple: take some input data and a text file, then append the input text content to the input file. This needs to be done using various AWS services.
 
-## Available Scripts
+# Cloning and Setting Up a React Project Locally
 
-In the project directory, you can run:
+Follow these instructions to clone a React project created with Create React App from GitHub and set it up on your local machine.
 
-### `npm start`
+## Prerequisites
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- Node.js and npm installed on your machine. You can download and install them from [here](https://nodejs.org/).
+- Make sure you install the latest stable version.
+- verify your installation with the following commands.
+  ```bash
+  node -v
+  npm -v
+  ```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Steps
 
-### `npm test`
+- Open up a command line interface in your local path where you want to clone the repository
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. **Clone the Repository:**
 
-### `npm run build`
+   ```bash
+   git clone https://github.com/EshwarThummala/fovus-challenge-ui.git
+   ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. **Opening the Repository Folder**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   ```bash
+   cd fovus-challenge-ui
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. **Installing all the dependencies needed to run the project**
 
-### `npm run eject`
+   ```bash
+   npm install
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+4. **Running the application**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   ```bash
+   npm start
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+5. **Opening the localhost:3000**
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- The browser should automatically open after the above command, if not, copy and paste the following url in the broswer.
+  ```bash
+  http://localhost:3000
+  ```
 
-## Learn More
+6. **Logging into the Application**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- After the application is opened, you will see a SignUp page, Create your profile there.
+- Give a valid email address and the password should be 8 characters long and username should be unique.
+- After clicking on the register account you will get a confirmation code to your email.
+- Enter the code into the website and click on confirm account.
+- Then it asks you to signin into the account.
+- Signin into the account using the username and password created in the signup page.
+- Once you signed in, you will see the home page.
