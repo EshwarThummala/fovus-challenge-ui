@@ -17,7 +17,6 @@ const SignUp = ({ userName, setUsername, setSignUpSuccess }) => {
           console.error(err);
         } else {
           setSignUpSuccess(true);
-          console.log(data);
         }
       },
     );

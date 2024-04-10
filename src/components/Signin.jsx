@@ -22,15 +22,14 @@ const Signin = ({ setSolPage, setSignInSuccess }) => {
     });
     user.authenticateUser(authenticationDetails, {
       onSuccess: (data) => {
-        console.log("User successfully logged in", data);
         getCognitoCredentials(data.idToken.jwtToken, setTokens);
         setSignInSuccess(true);
       },
       onFailure: (data) => {
-        console.error("User not signed in", data);
+        console.error("User not signed in, Authentication failed");
       },
       newPasswordRequired: (data) => {
-        console.log("New user password required", data);
+        console.log("New user password required");
       },
     });
   };

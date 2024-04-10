@@ -68,7 +68,7 @@ export async function getFileFromS3(fileName, tokens) {
   try {
     const command = new GetObjectCommand(params);
     const data = await s3.send(command);
-    console.log("File accessed successfully successfully:", data);
+    console.log("File accessed successfully successfully:");
     return await data.Body.transformToString();
   } catch (err) {
     console.error("Error uploading file:", err);

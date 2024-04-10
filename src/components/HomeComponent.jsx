@@ -36,7 +36,6 @@ const HomeComponent = ({
       return false;
     }
     event.preventDefault();
-    console.log(event);
     const s3FilePath = await uploadFileToS3(inputFile, tokens);
     sets3Message(s3FilePath);
     const recordID = await storeDetailsInDynamoDB(

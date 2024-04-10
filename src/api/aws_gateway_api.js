@@ -1,7 +1,7 @@
 export async function storeDetailsInDynamoDB(details, idToken) {
   try {
     const response = await fetch(
-      "https://9arj3sgsx5.execute-api.us-east-1.amazonaws.com/final",
+      "https://3gegb56ng5.execute-api.us-east-1.amazonaws.com/final",
       {
         method: "POST",
         headers: {

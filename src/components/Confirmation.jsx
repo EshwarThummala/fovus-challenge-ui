@@ -22,7 +22,6 @@ const Confirmation = ({ userName, setConfirmationSuccess }) => {
         if (err) {
           console.error(err);
         } else {
-          console.log(data);
           setConfirmationSuccess(true);
         }
       },
