@@ -1,4 +1,4 @@
-# Fovus Challenge UI (live [here](https://main.d1vhdim2v9wmoc.amplifyapp.com/))
+# Fovus Challenge UI
 
 This is a simple full-stack web application developed with AWS, React, and Flowbite Tailwind CSS. It demonstrates my understanding of numerous AWS services, including EC2, Lambda, API Gateway, Cognito, DynanoDB, IAM, and a few others. Additionally, it demonstrates my proficiency in the React Library. The project's functionality is simple: take some input data and a text file, then append the input text content to the input file. This needs to be done using various AWS services.
 
